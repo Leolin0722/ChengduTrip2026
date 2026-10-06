@@ -693,7 +693,7 @@ const PLACES = [
     body: [
       'Low grey-tiled buildings in a modern take on old Sichuan houses, with glass shopfronts, laneways and courtyards. Global brands sit next to Chinese designer labels, concept stores and some of the city\'s smartest cafés.',
       'In the middle is Daci Temple, a Buddhist temple with more than a thousand years of history, so you can step from a busy fashion street into a quiet courtyard in a minute.',
-      'Chunxi Road and the IFS mall, with its famous climbing panda, are right next door. The whole area is best from late afternoon, when the lights come on and Chengdu\'s best-dressed people come out.',
+      'Chunxi Road and the IFS mall, with its famous climbing panda, are right next door. The whole area is best from late afternoon, when the lights come on and Chengdu\'s best-dressed people come out. HARMAY is in here!',
     ],
     facts: [['Getting there', 'Metro Lines 2 and 3, Chunxi Road station'], ['Time needed', '2 to 3 hours'], ['Entry', 'Free'], ['Best time', 'Late afternoon into the evening']],
   },
@@ -902,6 +902,18 @@ PLACES.push(
       'The old lanes around it, called Wenshufang, are full of snack stalls and small shops. Arrive around 8:30 am to see the monks at morning practice before the crowds.',
     ],
     facts: [['Getting there', 'Metro Line 1, Wenshu Monastery station'], ['Time needed', '1 to 2 hours'], ['Entry', 'Usually free'], ['Best time', 'Early morning']],
+  },
+  {
+    id: 'mixc', en: 'MixC Chengdu', zh: '成都万象城', py: 'Wànxiàngchéng',
+    district: 'Chenghua District', lat: 30.6565, lon: 104.1050,   // approximate
+    photos: [{ local: 'mixc-1', credit: 'Photo via Xiaohongshu' }, { local: 'mixc-2', credit: 'Photo via Xiaohongshu' }, { local: 'mixc-3', credit: 'Photo via Xiaohongshu' }],
+    lede: 'A giant mall that feels like a neighbourhood: lanes of little shops and endless places to eat.',
+    body: [
+      'MixC opened in 2012 on the site of an old factory and has grown into the biggest shopping complex in central Chengdu, with more shops than anywhere else in the city centre. The newer half is laid out as open-air lanes, including an 800-metre cross-shaped street, with terraced buildings, rooftop gardens and art installations (pictured).',
+      'The fun is in the small stuff: lots of little boutiques, beauty and lifestyle shops, and stores opening their first branch in Chengdu, mixed with a huge choice of food, from Sichuan snacks and noodle counters to bistros, dessert spots and bars, some open late into the night.',
+      'Best for a relaxed afternoon and evening of browsing and grazing, a little east of the centre. HARMAY is in here!',
+    ],
+    facts: [['Getting there', 'A short walk from Wannian Road metro station'], ['Time needed', '2 to 3 hours'], ['Entry', 'Free'], ['Best time', 'Late afternoon into the evening']],
   },
   {
     id: 'leshan', type: 'daytrip', en: 'Leshan Giant Buddha', zh: '乐山大佛', py: 'Lèshān Dàfó',
@@ -1175,7 +1187,7 @@ const clockSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" st
    ===================================================================== */
 const commonsFile = (f, w = 1200) => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f)}?width=${w}`;
 const commonsPage = f => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f)}`;
-const PHOTO_KEYS = ['dufu-2','cosmo-1','cosmo-2','tianfu-1','tianfu-2','emei-c1','emei-c2','qc-h4','qc-h5','taikooli-1','taikooli-2','dufu-1','yulin-cover','wuhou-1','wuhou-2','wuhou-3','funan-1','dayuan-1','cpi-1','cpi-2','cpi-3','yongling-1','yongling-2','lann-1','lann-2','lann-3','ting-1','ting-2','emei-1','emei-2','emei-h1','emei-h2','emei-h3','qc-1','qc-2','qc-3','qc-h1','qc-h2','qc-h3','bpg-1','bpg-2','bpg-3','bpg-4','bpg-5','cq-1','cq-2','cq-h1','cq-h2','cq-h3','bj-1','bj-2','bj-3','bj-4','bj-h1','bj-h2'];
+const PHOTO_KEYS = ['mixc-1','mixc-2','mixc-3','dufu-2','cosmo-1','cosmo-2','tianfu-1','tianfu-2','emei-c1','emei-c2','qc-h4','qc-h5','taikooli-1','taikooli-2','dufu-1','yulin-cover','wuhou-1','wuhou-2','wuhou-3','funan-1','dayuan-1','cpi-1','cpi-2','cpi-3','yongling-1','yongling-2','lann-1','lann-2','lann-3','ting-1','ting-2','emei-1','emei-2','emei-h1','emei-h2','emei-h3','qc-1','qc-2','qc-3','qc-h1','qc-h2','qc-h3','bpg-1','bpg-2','bpg-3','bpg-4','bpg-5','cq-1','cq-2','cq-h1','cq-h2','cq-h3','bj-1','bj-2','bj-3','bj-4','bj-h1','bj-h2'];
 const LOCAL = {}, LOCAL_T = {};
 for (const k of PHOTO_KEYS) { LOCAL[k] = 'photos/' + k + '.webp'; LOCAL_T[k] = 'photos/thumb/' + k + '.webp'; }
 const gallery = {}, galleryIndex = {}, pending = {};

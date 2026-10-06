@@ -451,12 +451,21 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
   .facts{grid-template-columns:1fr}
   .hotel-card{grid-template-columns:1fr}
   .hotel-card .ph{min-height:200px}
-  .sheet{top:auto;left:10px;right:10px;bottom:calc(10px + var(--safe-b));width:auto;height:min(76vh,700px);border-radius:26px;border-bottom:1px solid var(--line-2);transform:translateY(calc(100% + 40px));box-shadow:0 20px 60px rgba(0,0,0,.55)}
-  .sheet .gal-hero,.sheet .gal-hero.fit{aspect-ratio:16/11;max-height:30vh;width:auto;border-radius:18px}
+  .sheet{top:auto;left:10px;right:10px;bottom:calc(10px + var(--safe-b));width:auto;height:min(76vh,700px);max-height:calc(100vh - var(--topbar) - var(--safe-t) - var(--safe-b) - 24px);max-height:calc(100dvh - var(--topbar) - var(--safe-t) - var(--safe-b) - 24px);border-radius:26px;border-bottom:1px solid var(--line-2);transform:translateY(calc(100% + 40px));box-shadow:0 20px 60px rgba(0,0,0,.55)}
+  .sheet .gal-hero,.sheet .gal-hero.fit{aspect-ratio:auto;height:min(30vh,250px);width:auto;border-radius:18px}
   .sheet{display:block;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
   .sheet-scroll{overflow:visible;height:auto;min-height:0}
   .sheet-close{position:sticky;top:18px;display:grid;margin:18px 18px -52px auto;width:34px;height:34px}
-  .sheet-foot{position:sticky;bottom:0;z-index:2;padding:12px 14px 14px;border-radius:0 0 26px 26px;box-shadow:0 -10px 24px rgba(0,0,0,.35)}
+  .sheet .foot-top{margin-bottom:7px;font-size:13px}
+  .sheet .answers{gap:5px;grid-template-columns:1.45fr 1fr 1fr .75fr}
+  .sheet .ans{min-height:38px;padding:5px 6px;font-size:12px;gap:5px;border-radius:12px;flex-direction:row;line-height:1.15;text-align:left}
+  .sheet .ans .dot{flex-shrink:0}
+  body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 8px)}
+  .sheet .ans .dot{width:7px;height:7px}
+  .sheet .foot-next{margin-top:7px}
+  .sheet .foot-next .btn{padding:6px 13px;font-size:13.5px}
+  .sheet .foot-next .pick-name{font-size:13px}
+  .sheet-foot{position:sticky;bottom:0;z-index:2;padding:9px 12px 10px;border-radius:0 0 26px 26px;box-shadow:0 -10px 24px rgba(0,0,0,.35)}
   .sheet.open{transform:none}
   .names{flex-direction:column;align-items:flex-start;gap:8px}
   .leaflet-control-zoom{display:none}
@@ -680,7 +689,7 @@ const PLACES = [
   {
     id: 'dufu', en: 'Du Fu Thatched Cottage', alt: 'Du Fu Thatched Cottage Museum', zh: '杜甫草堂', py: 'Dù Fǔ Cǎotáng',
     district: 'Qingyang District', lat: 30.6597, lon: 104.0283,
-    photos: [{ local: 'dufu-1', credit: 'Photo via Xiaohongshu' }],
+    photos: [{ local: 'dufu-1', credit: 'Photo via Xiaohongshu' }, { local: 'dufu-2', credit: 'Photo via Xiaohongshu' }],
     lede: 'A great poet\'s home, now a peaceful garden of bamboo, ponds and red walls.',
     body: [
       'Du Fu is one of China\'s most loved poets. Around the year 760, fleeing war, he built a simple thatched hut by a stream here and wrote more than 200 poems in a few years.',
@@ -1142,7 +1151,7 @@ const clockSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" st
    ===================================================================== */
 const commonsFile = (f, w = 1200) => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f)}?width=${w}`;
 const commonsPage = f => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f)}`;
-const PHOTO_KEYS = ['cosmo-1','cosmo-2','tianfu-1','tianfu-2','emei-c1','emei-c2','qc-h4','qc-h5','taikooli-1','taikooli-2','dufu-1','yulin-cover','wuhou-1','wuhou-2','wuhou-3','funan-1','dayuan-1','cpi-1','cpi-2','cpi-3','yongling-1','yongling-2','lann-1','lann-2','lann-3','ting-1','ting-2','emei-1','emei-2','emei-h1','emei-h2','emei-h3','qc-1','qc-2','qc-3','qc-h1','qc-h2','qc-h3','bpg-1','bpg-2','bpg-3','bpg-4','bpg-5','cq-1','cq-2','cq-h1','cq-h2','cq-h3','bj-1','bj-2','bj-3','bj-4','bj-h1','bj-h2'];
+const PHOTO_KEYS = ['dufu-2','cosmo-1','cosmo-2','tianfu-1','tianfu-2','emei-c1','emei-c2','qc-h4','qc-h5','taikooli-1','taikooli-2','dufu-1','yulin-cover','wuhou-1','wuhou-2','wuhou-3','funan-1','dayuan-1','cpi-1','cpi-2','cpi-3','yongling-1','yongling-2','lann-1','lann-2','lann-3','ting-1','ting-2','emei-1','emei-2','emei-h1','emei-h2','emei-h3','qc-1','qc-2','qc-3','qc-h1','qc-h2','qc-h3','bpg-1','bpg-2','bpg-3','bpg-4','bpg-5','cq-1','cq-2','cq-h1','cq-h2','cq-h3','bj-1','bj-2','bj-3','bj-4','bj-h1','bj-h2'];
 const LOCAL = {}, LOCAL_T = {};
 for (const k of PHOTO_KEYS) { LOCAL[k] = 'photos/' + k + '.webp'; LOCAL_T[k] = 'photos/thumb/' + k + '.webp'; }
 const gallery = {}, galleryIndex = {}, pending = {};

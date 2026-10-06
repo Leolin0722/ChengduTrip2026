@@ -195,7 +195,7 @@ body:not([data-page="home"]) .topbar{background:rgba(6,9,18,.82);backdrop-filter
 .chip[aria-pressed="true"]{border-color:var(--amber);background:rgba(40,28,6,.8)}
 .chip.hotel .th{background:var(--amber);color:var(--amber-ink);display:grid;place-items:center}
 
-.sheet{position:absolute;z-index:800;top:calc(var(--topbar) + var(--safe-t) + 12px);right:12px;bottom:12px;width:min(452px,42vw);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line-2);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);transform:translateX(calc(100% + 30px));transition:transform .42s cubic-bezier(.2,.8,.2,1);visibility:hidden}
+.sheet{position:absolute;z-index:800;top:calc(var(--topbar) + var(--safe-t) + 12px);right:12px;bottom:12px;width:min(452px,42vw);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line-2);border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);transform:translateX(calc(100% + 30px));transition:transform .42s cubic-bezier(.2,.8,.2,1);visibility:hidden}
 .sheet.open{transform:none;visibility:visible}
 .sheet-close{position:absolute;z-index:3;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);background:rgba(6,9,18,.7);backdrop-filter:blur(8px);display:grid;place-items:center;cursor:pointer}
 .sheet-close:hover{background:rgba(6,9,18,.9)}
@@ -380,6 +380,9 @@ body[data-page="explore"] .toast.show{transform:translate(-50%,0)}
 .ga-note{margin:16px 0 0;font-size:14.5px;color:var(--trip)}
 .ga-hotel{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
 .ga-hotel-name{margin:8px 0 0;font-size:19px;font-weight:600;color:var(--amber)}
+.ga-hotel-brand{margin:6px 0 0;font-size:14px;line-height:1.55;color:var(--ink-2);font-style:italic}
+.ga-hotel-room{display:inline-flex;align-items:center;gap:8px;margin:12px 0 0;padding:5px 12px 5px 5px;border-radius:999px;background:rgba(255,181,71,.12);border:1px solid rgba(255,181,71,.4);font-size:14px;font-weight:600;color:var(--ink)}
+.ga-hotel-room span{padding:2px 8px;border-radius:999px;background:var(--amber);color:var(--amber-ink);font-size:12px}
 .ga-hotel-text{margin:6px 0 14px;color:var(--ink-2);font-size:15.5px;line-height:1.6}
 .ga-hotel .ga-gal{border-radius:var(--r-md);overflow:hidden}
 .ga-hotel .gal-thumbs{padding:8px 0 0}
@@ -415,6 +418,15 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
 .pin.getaway .pin-photo{border-color:var(--ga)} .pin.getaway::after{background:var(--ga)} .pin.getaway .pin-type{color:var(--ga)}
 .chip.getaway{border-color:rgba(255,111,163,.6)} .chip.getaway .chip-tag{color:var(--ga)}
 .type-tag.getaway{background:rgba(255,111,163,.16);color:var(--ga)}
+.sheet-scroll{min-height:0;-webkit-overflow-scrolling:touch}
+.sheet .gal-hero{margin:10px 10px 0;border-radius:20px}
+.sheet .gal-thumbs{padding:10px 14px 0}
+.sheet-close{top:20px;right:20px}
+.sheet-foot{border-radius:0 0 28px 28px}
+.ans{border-radius:14px}
+#sheetTitle:focus,#gaH:focus{outline:none}
+.carrier{display:flex;justify-content:center;margin:-18px 0 26px}
+.carrier img{height:32px;width:auto;opacity:.95}
 /* ---------- Small screens ---------- */
 @media (max-width:760px){
   :root{--topbar:58px}
@@ -439,7 +451,12 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
   .facts{grid-template-columns:1fr}
   .hotel-card{grid-template-columns:1fr}
   .hotel-card .ph{min-height:200px}
-  .sheet{top:auto;left:0;right:0;bottom:0;width:auto;height:min(70vh,660px);border-radius:22px 22px 0 0;border-bottom:0;transform:translateY(105%)}
+  .sheet{top:auto;left:10px;right:10px;bottom:calc(10px + var(--safe-b));width:auto;height:min(76vh,700px);border-radius:26px;border-bottom:1px solid var(--line-2);transform:translateY(calc(100% + 40px));box-shadow:0 20px 60px rgba(0,0,0,.55)}
+  .sheet .gal-hero,.sheet .gal-hero.fit{aspect-ratio:16/11;max-height:30vh;width:auto;border-radius:18px}
+  .sheet{display:block;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .sheet-scroll{overflow:visible;height:auto;min-height:0}
+  .sheet-close{position:sticky;top:18px;display:grid;margin:18px 18px -52px auto;width:34px;height:34px}
+  .sheet-foot{position:sticky;bottom:0;z-index:2;padding:12px 14px 14px;border-radius:0 0 26px 26px;box-shadow:0 -10px 24px rgba(0,0,0,.35)}
   .sheet.open{transform:none}
   .names{flex-direction:column;align-items:flex-start;gap:8px}
   .leaflet-control-zoom{display:none}
@@ -457,9 +474,11 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
   .score .agree{margin-top:0}
 }
 @media (max-width:420px){
-  .brand{display:none}
-  .tabs{margin-left:0}
-  .topbar{justify-content:space-between}
+  .topbar{gap:8px;padding-left:12px;padding-right:12px}
+  .brand{padding:4px 2px}
+  .brand .zh{font-size:18px}
+  .tabs{margin-left:auto}
+  .tabs a{padding:6px 6px;font-size:12.5px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
@@ -484,7 +503,7 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
     <div class="globe-labels" id="globeLabels" aria-hidden="true"></div>
     <div class="home-copy">
       <p class="hello" id="hello"></p>
-      <p class="home-dates">13 to 21 December 2026</p>
+      <p class="home-dates">13 to 20 December 2026</p>
       <h1 class="home-title"><span class="en">Chengdu</span><span class="zh" lang="zh">成都</span></h1>
       <a class="cta" href="#/journey">View your journey
         <span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -696,7 +715,7 @@ PLACES.push(
   {
     id: 'cosmo', en: 'COSMO', alt: 'COSMO Chengdu', zh: '成都COSMO', py: '', zhNote: ['Area', '盐市口'],
     district: 'Yanshikou, Jinjiang District', lat: 30.6556, lon: 104.0722,
-    photos: [{ src: 'https://image.archify.com/blog/l/COSMO_1F%2001.jpg', page: 'https://www.archify.com/id/archifynow/go-to-cosmo-for-fun-new-scene-of-content-to-build-china-s-trendy-cultural-utopia', credit: 'COSMO interior by Oft Interiors. Photo via Archify' }],
+    photos: [{ local: 'cosmo-1', credit: 'Photo via Xiaohongshu' }, { local: 'cosmo-2', credit: 'Photo via Xiaohongshu' }, { src: 'https://image.archify.com/blog/l/COSMO_1F%2001.jpg', page: 'https://www.archify.com/id/archifynow/go-to-cosmo-for-fun-new-scene-of-content-to-build-china-s-trendy-cultural-utopia', credit: 'COSMO interior by Oft Interiors. Photo via Archify' }],
     lede: 'An old department store reborn as Chengdu\'s youth-culture mall.',
     body: [
       'Look for the 6.5-metre blue rabbit by the entrance and the giant sneaker hanging off the front. Inside, a 2007 box-shaped department store has been rebuilt with polished steel, glass, concrete and LED screens, so it feels more like a gallery than a mall.',
@@ -817,6 +836,7 @@ PLACES.push(
   {
     id: 'tianfu', en: 'Tianfu Square and Chengdu Museum', zh: '天府广场', zhNote: ['Also here', '成都博物馆、皇城清真寺'], py: 'Tiānfǔ Guǎngchǎng',
     district: 'Qingyang District', lat: 30.6574, lon: 104.0659,
+    photos: [{ local: 'tianfu-1', credit: 'Photo via Xiaohongshu' }, { local: 'tianfu-2', credit: 'Photo via Xiaohongshu' }],
     commons: ['Chengdu Museum', 'Tianfu Square Chengdu'],
     lede: 'The heart of the city: a giant square, a free museum and a historic mosque.',
     body: [
@@ -921,12 +941,12 @@ const GETAWAYS = [
   {
     id: 'emei', en: 'Mount Emei and hot springs', short: 'Mount Emei', zh: '峨眉山', lat: 29.5226, lon: 103.3320,
     travel: 'About 1 to 1.5 hours by high-speed train, then mountain buses',
-    photos: ['emei-1', 'emei-2'],
+    photos: ['emei-c1', 'emei-c2', 'emei-1', 'emei-2'],
     body: [
       'Mount Emei is one of China\'s four sacred Buddhist mountains and a UNESCO World Heritage Site. Ancient temples line forested paths up to the Golden Summit, where a giant golden statue of the bodhisattva Samantabhadra stands above a sea of clouds. Come for sunrise, misty forests and cheeky wild monkeys, then soak in a hot spring.',
     ],
     route: ['High-speed train from Chengdu to Emeishan station', '2-hour bus to the mountain entrance, at about 2,000 m', '30-minute walk to the cable car', '20-minute cable car to the top, at around 3,000 m'],
-    hotel: { name: 'Banyan Tree Emei', text: 'Each villa has its own outdoor hot spring, fed by water from Mount Emei.', photos: ['emei-h1', 'emei-h2', 'emei-h3'] },
+    hotel: { name: 'Banyan Tree Emei', brand: 'Banyan Tree is a Singapore-born luxury resort brand, famous for private pool villas and spas. This is its Mount Emei retreat.', text: 'The hot spring in each room comes from Mount Emei: a deep-circulating geothermal natural radon spring (深层循环地热天然氡温泉), drawn from 3,000 m underground. Radon springs have been used to soothe joint and muscle aches for over a century, and a 2024 clinical trial found radon baths eased pain and morning stiffness more than plain warm water.', photos: ['emei-h1', 'emei-h2', 'emei-h3'] },
   },
   {
     id: 'qc', en: 'Qingcheng Mountain and Dujiangyan', short: 'Qingcheng', zh: '青城山 都江堰', lat: 30.9000, lon: 103.5730,
@@ -937,7 +957,7 @@ const GETAWAYS = [
       'Next door, Dujiangyan is an irrigation system built around 256 BC that still waters the Chengdu plain. Both are UNESCO World Heritage Sites.',
     ],
     note: 'This one also works as a day trip, so it\'s on the Explore map too.',
-    hotel: { name: 'Six Senses Qing Cheng Mountain', text: 'A resort at the foot of the mountain, built like a traditional Sichuan village with low roofs, timber and bamboo. We\'d have a two-bedroom villa with its own swimming pool and outdoor hot tub. There\'s a spa with Taoist-inspired treatments, an organic garden supplying the restaurants, and tai chi in the mornings. About an hour\'s drive from Chengdu airport.', photos: ['qc-h1', 'qc-h2', 'qc-h3'] },
+    hotel: { name: 'Six Senses Qing Cheng Mountain', room: 'Courtyard Villa / Villa', brand: 'Six Senses is a wellness-led luxury brand, and this was its first resort in China. It holds one MICHELIN Key, the Michelin Guide\'s hotel award.', text: 'A resort at the foot of the mountain, built like a traditional Sichuan village with low roofs, timber and bamboo. There\'s a spa with Taoist-inspired treatments, an organic garden supplying the restaurants, and tai chi in the mornings. About an hour\'s drive from Chengdu airport.', photos: ['qc-h1', 'qc-h2', 'qc-h3', 'qc-h4', 'qc-h5'] },
   },
   {
     id: 'bipenggou', en: 'Bipenggou', short: 'Bipenggou', zh: '毕棚沟', lat: 31.40, lon: 103.05,
@@ -969,7 +989,7 @@ const GETAWAYS = [
     body: [
       'Chongqing is nicknamed the "8D city" because it\'s built on such steep hills that the ground floor on one street can be the 20th floor on another. Trains run straight through apartment blocks, cable cars cross the river, and Hongyadong, a cliffside stack of stilted houses, glows gold at night (pictured). It\'s also China\'s hotpot capital.',
     ],
-    hotel: { name: 'InterContinental or Hotel Indigo Chongqing', text: 'With an infinity pool on the 70th floor and up, looking out over the city.', photos: ['cq-h1', 'cq-h2', 'cq-h3'] },
+    hotel: { name: 'InterContinental or Hotel Indigo Chongqing', brand: 'InterContinental is IHG\'s flagship luxury brand; Hotel Indigo is IHG\'s boutique brand, with each hotel designed around its local neighbourhood.', text: 'With an infinity pool on the 70th floor and up, looking out over the city.', photos: ['cq-h1', 'cq-h2', 'cq-h3'] },
   },
   {
     id: 'beijing', en: 'Beijing, the wild one', short: 'Beijing', zh: '北京', lat: 39.9163, lon: 116.3972,
@@ -979,7 +999,8 @@ const GETAWAYS = [
       'The wild card: fly up to the capital for the Forbidden City, the vast palace of the Ming and Qing emperors; Tiananmen Square right in front of it; and the Temple of Heaven, where emperors prayed for good harvests.',
       'The Great Wall doesn\'t fit into one night, so it\'s off the list this time.',
     ],
-    hotel: { name: 'Rosewood Beijing or Mandarin Oriental Wangfujing', text: 'Two options, both in central Beijing.', photos: ['bj-h1', 'bj-h2'] },
+    note: 'Air tickets are out of your own pocket (about £200).',
+    hotel: { name: 'Rosewood Beijing or Mandarin Oriental Wangfujing', brand: 'Rosewood, from Hong Kong, is an ultra-luxury brand built on a "sense of place"; Mandarin Oriental, also from Hong Kong, is famed for its service.', text: 'Two options, both in central Beijing.', photos: ['bj-h1', 'bj-h2'] },
   },
 ];
 
@@ -1121,7 +1142,7 @@ const clockSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" st
    ===================================================================== */
 const commonsFile = (f, w = 1200) => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f)}?width=${w}`;
 const commonsPage = f => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f)}`;
-const PHOTO_KEYS = ['taikooli-1','taikooli-2','dufu-1','yulin-cover','wuhou-1','wuhou-2','wuhou-3','funan-1','dayuan-1','cpi-1','cpi-2','cpi-3','yongling-1','yongling-2','lann-1','lann-2','lann-3','ting-1','ting-2','emei-1','emei-2','emei-h1','emei-h2','emei-h3','qc-1','qc-2','qc-3','qc-h1','qc-h2','qc-h3','bpg-1','bpg-2','bpg-3','bpg-4','bpg-5','cq-1','cq-2','cq-h1','cq-h2','cq-h3','bj-1','bj-2','bj-3','bj-4','bj-h1','bj-h2'];
+const PHOTO_KEYS = ['cosmo-1','cosmo-2','tianfu-1','tianfu-2','emei-c1','emei-c2','qc-h4','qc-h5','taikooli-1','taikooli-2','dufu-1','yulin-cover','wuhou-1','wuhou-2','wuhou-3','funan-1','dayuan-1','cpi-1','cpi-2','cpi-3','yongling-1','yongling-2','lann-1','lann-2','lann-3','ting-1','ting-2','emei-1','emei-2','emei-h1','emei-h2','emei-h3','qc-1','qc-2','qc-3','qc-h1','qc-h2','qc-h3','bpg-1','bpg-2','bpg-3','bpg-4','bpg-5','cq-1','cq-2','cq-h1','cq-h2','cq-h3','bj-1','bj-2','bj-3','bj-4','bj-h1','bj-h2'];
 const LOCAL = {}, LOCAL_T = {};
 for (const k of PHOTO_KEYS) { LOCAL[k] = 'photos/' + k + '.webp'; LOCAL_T[k] = 'photos/thumb/' + k + '.webp'; }
 const gallery = {}, galleryIndex = {}, pending = {};
@@ -1515,6 +1536,7 @@ function renderJourney() {
   const nights = Math.round((Date.parse(outCdu.date) - Date.parse(inCdu.date)) / 864e5);
   const h = HOTEL;
   $('#journeyBody').innerHTML = `
+    <div class="carrier"><img src="photos/cathay.png" alt="Cathay Pacific" width="26" height="32"></div>
     <h1 class="page-title" id="journeyTitle">Your journey</h1>
     <p class="page-sub">London to Chengdu and back, via Amsterdam and Hong Kong.</p>
     ${tripCard('outbound')}
@@ -1701,7 +1723,7 @@ const Explore = (() => {
     const it = gallery[p.id][galleryIndex[p.id] || 0];
     const credit = !it ? '' : it.page ? `<a class="gal-credit" href="${esc(it.page)}" target="_blank" rel="noopener">${esc(it.credit || 'Photo')}</a>` : `<span class="gal-credit">${esc(it.credit || '')}</span>`;
     const fb = !p.zh ? p.en : p.zh.length > 6 ? '酒店' : p.zh;
-    const img = it ? `<img src="${esc(it.src)}" alt="${esc(p.en)}" data-fb="${esc(fb)}" referrerpolicy="no-referrer" decoding="async" onload="heroFit(this)" onerror="imgFail(this)">` : imgHTML(null, '', fb);
+    const img = it ? `<img class="bg" src="${esc(it.src)}" alt="" aria-hidden="true" referrerpolicy="no-referrer"><img class="fg" src="${esc(it.src)}" alt="${esc(p.en)}" data-fb="${esc(fb)}" referrerpolicy="no-referrer" decoding="async" onerror="imgFail(this)">` : imgHTML(null, '', fb);
     return img + credit;
   }
   function thumbsHTML(p) {
@@ -1715,7 +1737,7 @@ const Explore = (() => {
     const shortZh = p.zh && p.zh.length <= 6;
     const tag = p.type === 'daytrip' ? '<span class="type-tag daytrip">Day trip</span>' : p.type === 'massage' ? '<span class="type-tag massage">Massage, just for info</span>' : p.type === 'getaway' ? '<span class="type-tag getaway">2 days, 1 night</span>' : '';
     $('#sheetScroll').innerHTML = `
-      <div class="gal-hero" id="galHero">${heroHTML(p)}</div>
+      <div class="gal-hero fit" id="galHero">${heroHTML(p)}</div>
       <div class="gal-thumbs" id="galThumbs">${thumbsHTML(p)}</div>
       <div class="sheet-body">
         <div class="names"><h2 tabindex="-1" id="sheetTitle">${esc(p.en)}</h2>${shortZh ? `<span class="zh" lang="zh">${p.zh}</span>` : ''}</div>
@@ -1769,13 +1791,13 @@ const Explore = (() => {
     if (!fromRoute) history.replaceState(null, '', '#/explore/' + id);
     renderSheet(p);
     const s = sheet(); s.classList.add('open'); s.setAttribute('aria-hidden', 'false'); $('#page-explore').classList.add('has-sheet');
-    $('#sheetScroll').scrollTop = 0;
+    $('#sheetScroll').scrollTop = 0; s.scrollTop = 0;
     refreshPins(); renderRail();
     const mobile = innerWidth <= 760;
     const z = Math.max(map.getZoom(), 14);
     const railBottom = $('#rail').getBoundingClientRect().bottom;
     let ox, oy;
-    if (mobile) { ox = 0; oy = innerHeight / 2 - (innerHeight - s.offsetHeight - 26); }
+    if (mobile) { ox = 0; oy = 0; }
     else { ox = (s.offsetWidth + 24) / 2; oy = -railBottom / 2; }
     const pt = map.project([p.lat, p.lon], z).add(L.point(ox, oy));
     map.flyTo(map.unproject(pt, z), z, { duration: reduceMotion ? 0 : wasOpen ? 0.6 : 0.9 });
@@ -1784,7 +1806,9 @@ const Explore = (() => {
   }
   function close() {
     if (!current) return;
+    const was = byId(current);
     current = null;
+    if (was && map) map.panTo([was.lat, was.lon], { animate: !reduceMotion, duration: 0.5 });
     const s = sheet(); s.classList.remove('open'); s.setAttribute('aria-hidden', 'true'); $('#page-explore').classList.remove('has-sheet');
     history.replaceState(null, '', '#/explore');
     refreshPins(); renderRail();
@@ -1917,7 +1941,7 @@ const Getaways = (() => {
         ${g.note ? `<p class="ga-note">${esc(g.note)}</p>` : ''}
         <section class="ga-hotel" aria-label="Where we'd stay">
           <h3>Where we'd stay</h3>
-          ${g.hotel ? `<p class="ga-hotel-name">${esc(g.hotel.name)}</p><p class="ga-hotel-text">${esc(g.hotel.text)}</p>${gallery(g.id + '-h', pics(g.hotel.photos), g.hotel.name)}` : `<p class="ga-hotel-text">No hotel picked yet for this one.</p>`}
+          ${g.hotel ? `<p class="ga-hotel-name">${esc(g.hotel.name)}</p>${g.hotel.brand ? `<p class="ga-hotel-brand">${esc(g.hotel.brand)}</p>` : ''}${g.hotel.room ? `<p class="ga-hotel-room"><span>Room</span>${esc(g.hotel.room)}</p>` : ''}<p class="ga-hotel-text">${esc(g.hotel.text)}</p>${gallery(g.id + '-h', pics(g.hotel.photos), g.hotel.name)}` : `<p class="ga-hotel-text">No hotel picked yet for this one.</p>`}
         </section>
         <div class="ga-rank" id="gaRank">${rankHTML(g)}</div>
       </div>`;

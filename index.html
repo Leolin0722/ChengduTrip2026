@@ -446,6 +446,9 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
 .idea-list li.idea-empty{display:block;color:var(--mute);font-size:14.5px;background:none;border-style:dashed}
 .idea-del{border:0;background:none;color:var(--mute);cursor:pointer;font-size:20px;line-height:1;padding:2px 6px}
 .idea-del:hover{color:var(--ink)}
+.apt{position:absolute;left:-10px;top:-10px;display:flex;align-items:center;gap:3px;white-space:nowrap;pointer-events:none}
+.apt-ic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#2F6FE4;color:#fff;border:1.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.apt-name{padding:1px 5px;border-radius:6px;background:rgba(6,9,18,.8);color:#fff;font-size:10px;font-weight:700;letter-spacing:.03em}
 /* ---------- Small screens ---------- */
 @media (max-width:760px){
   :root{--topbar:58px}
@@ -1732,6 +1735,14 @@ const Explore = (() => {
       markers[p.id] = m;
       layers[typeOf(p)].addLayer(m);
     }
+    // Airports: small plane markers, always shown, just for orientation
+    [{ code: 'CTU', en: 'Shuangliu Airport', zh: '双流机场', lat: 30.5785, lon: 103.9471, note: 'Our flights' },
+     { code: 'TFU', en: 'Tianfu Airport', zh: '天府机场', lat: 30.3190, lon: 104.4450 }].forEach(a => {
+      L.marker([a.lat, a.lon], {
+        icon: L.divIcon({ className: 'pin-anchor', iconSize: [0, 0], html: `<div class="apt" title="${a.en} (${a.code}) ${a.zh}" aria-label="${a.en} (${a.code})"><span class="apt-ic">${planeSvg(45, 11)}</span><span class="apt-name">${a.code}</span></div>` }),
+        interactive: false, keyboard: false, zIndexOffset: -200,
+      }).addTo(map);
+    });
     applyFilter(false, true);
     map.on('zoomend', zoomClass);
     zoomClass();

@@ -427,6 +427,25 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
 #sheetTitle:focus,#gaH:focus{outline:none}
 .carrier{display:flex;justify-content:center;margin:-18px 0 26px}
 .carrier img{height:32px;width:auto;opacity:.95}
+.foot-top .saved{margin-left:auto}
+.foot-count{margin-left:10px;font-size:13.5px;color:var(--mute);white-space:nowrap}
+.vote-row{display:flex;gap:6px;align-items:stretch}
+.vote-row .answers{flex:1;min-width:0}
+.vote-row .ans{min-height:48px}
+.next-btn{flex-shrink:0;border-radius:12px;padding:0 14px}
+.ideas{margin-top:26px;padding:22px 24px;border-radius:var(--r-lg);background:var(--panel);border:1px solid var(--line)}
+.ideas h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.01em}
+.idea-form{display:flex;gap:8px;margin-top:14px}
+.idea-form input{flex:1;min-width:0;padding:11px 14px;border-radius:12px;border:1px solid var(--line-2);background:rgba(236,241,250,.05);color:var(--ink);font:inherit;font-size:16px}
+.idea-form input::placeholder{color:var(--mute)}
+.idea-form input:focus{outline:2px solid var(--amber);outline-offset:1px}
+.idea-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.idea-list li{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(236,241,250,.04);border:1px solid var(--line);font-size:15px}
+.idea-list .avatar{flex-shrink:0;width:26px;height:26px;font-size:11px}
+.idea-list .t{flex:1;padding-top:3px;line-height:1.45;overflow-wrap:anywhere}
+.idea-list li.idea-empty{display:block;color:var(--mute);font-size:14.5px;background:none;border-style:dashed}
+.idea-del{border:0;background:none;color:var(--mute);cursor:pointer;font-size:20px;line-height:1;padding:2px 6px}
+.idea-del:hover{color:var(--ink)}
 /* ---------- Small screens ---------- */
 @media (max-width:760px){
   :root{--topbar:58px}
@@ -457,7 +476,11 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
   .sheet-scroll{overflow:visible;height:auto;min-height:0}
   .sheet-close{position:sticky;top:18px;display:grid;margin:18px 18px -52px auto;width:34px;height:34px}
   .sheet .foot-top{margin-bottom:7px;font-size:13px}
-  .sheet .answers{gap:5px;grid-template-columns:1.45fr 1fr 1fr .75fr}
+  .sheet .answers{gap:5px}
+  .sheet .vote-row .ans{min-height:34px;padding:4px 3px;font-size:12.5px}
+  .sheet .next-btn{padding:0 9px;font-size:13px}
+  .sheet .np{display:none}
+  .sheet .foot-count{font-size:12.5px}
   .sheet .ans{min-height:38px;padding:5px 6px;font-size:12px;gap:5px;border-radius:12px;flex-direction:row;line-height:1.15;text-align:left}
   .sheet .ans .dot{flex-shrink:0}
   body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 8px)}
@@ -1021,8 +1044,8 @@ const GA_PINS = GETAWAYS.map(g => ({
 }));
 
 const LEVELS = [
-  { v: 3, label: 'Really wanna go', short: 'Really', c: 'var(--l3)' },
-  { v: 2, label: 'Kinda',           short: 'Kinda',  c: 'var(--l2)' },
+  { v: 3, label: 'Yesss',  short: 'Yesss',  c: 'var(--l3)' },
+  { v: 2, label: 'Intend', short: 'Intend', c: 'var(--l2)' },
   { v: 1, label: 'Maybe',           short: 'Maybe',  c: 'var(--l1)' },
   { v: 0, label: 'No',              short: 'No',     c: 'var(--l0)' },
 ];
@@ -1082,9 +1105,9 @@ const Sync = (() => {
       const [app, fs] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-firestore.js')]);
       F = fs; db = F.getFirestore(app.initializeApp(cfg));
       F.onSnapshot(F.collection(db, 'trips', TRIP_ID, 'people'), snap => {
-        const answers = {}, ranks = {};
-        snap.forEach(d => { const v = d.data() || {}; answers[d.id] = v.answers || {}; ranks[d.id] = v.ranks || {}; });
-        state.data.answers = answers; state.data.ranks = ranks;
+        const answers = {}, ranks = {}, ideas = {};
+        snap.forEach(d => { const v = d.data() || {}; answers[d.id] = v.answers || {}; ranks[d.id] = v.ranks || {}; ideas[d.id] = v.ideas || []; });
+        state.data.answers = answers; state.data.ranks = ranks; state.data.ideas = ideas;
         if (!live) { live = true; document.body.classList.add('is-live'); }
         LS.set('cd26.votes', state.data);
         refreshAll();
@@ -1103,6 +1126,7 @@ const Sync = (() => {
         name: TRAVELLERS[state.me],
         answers: (state.data.answers || {})[state.me] || {},
         ranks: (state.data.ranks || {})[state.me] || {},
+        ideas: (state.data.ideas || {})[state.me] || [],
         updatedAt: F.serverTimestamp(),
       }).catch(onErr);
     }
@@ -1110,7 +1134,7 @@ const Sync = (() => {
   }
   function clearAll() {
     if (!db) return;
-    TRAVELLERS.forEach((_, i) => F.deleteDoc(F.doc(db, 'trips', TRIP_ID, 'people', String(i))).catch(onErr));
+    TRAVELLERS.forEach((_, i) => F.updateDoc(F.doc(db, 'trips', TRIP_ID, 'people', String(i)), { answers: {}, ranks: {} }).catch(() => {}));
     F.setDoc(F.doc(db, 'trips', TRIP_ID), { revealed: false }, { merge: true }).catch(onErr);
   }
   return { start, push, clearAll, get live() { return live; }, get enabled() { return !!(cfg && cfg.apiKey && !/PASTE/.test(cfg.apiKey)); } };
@@ -1785,12 +1809,13 @@ const Explore = (() => {
     }
     const cur = myAnswers()[p.id], done = answeredCount(state.me), all = done === PLACES.length;
     f.innerHTML = `
-      <div class="foot-top"><span>How keen are you, <b>${esc(TRAVELLERS[state.me])}</b>?</span><span class="saved" id="saved">Saved</span></div>
-      <div class="answers" role="group" aria-label="Your answer for ${esc(p.en)}">
-        ${LEVELS.map(L => `<button class="ans" type="button" style="--c:${L.c}" data-v="${L.v}" aria-pressed="${cur === L.v}"><span class="dot" aria-hidden="true"></span>${L.label}</button>`).join('')}
-      </div>
-      <div class="foot-next"><span class="pick-name">${done} of ${PLACES.length} answered</span>
-        <button class="btn${all ? ' primary' : ''}" type="button" data-next>${all ? 'See results' : 'Next place'} ${arrowSvg()}</button></div>`;
+      <div class="foot-top"><span>How keen are you, <b>${esc(TRAVELLERS[state.me])}</b>?</span><span class="saved" id="saved">Saved</span><span class="foot-count">${done} of ${PLACES.length}<span class="np"> answered</span></span></div>
+      <div class="vote-row">
+        <div class="answers" role="group" aria-label="Your answer for ${esc(p.en)}">
+          ${LEVELS.map(L => `<button class="ans" type="button" style="--c:${L.c}" data-v="${L.v}" aria-pressed="${cur === L.v}"><span class="dot" aria-hidden="true"></span>${L.label}</button>`).join('')}
+        </div>
+        <button class="btn next-btn${all ? ' primary' : ''}" type="button" data-next aria-label="${all ? 'See results' : 'Next place'}">${all ? 'Results' : 'Next'} ${arrowSvg(14)}</button>
+      </div>`;
   }
   function open(id, fromRoute) {
     const p = byId(id); if (!p || !map) return;
@@ -2045,9 +2070,29 @@ const Getaways = (() => {
    ===================================================================== */
 let sortBy = 'score', hideNo = false;
 const betaNote = () => Sync.live ? (state.me === ORGANISER ? `<div class="beta-note"><span>Answers are shared live between all three of you.</span><button class="btn ghost" type="button" id="clearAll">Clear everyone's answers</button></div>` : `<div class="beta-note"><span>Answers are shared live between all three of you.</span></div>`) : `<div class="beta-note"><span>Answers are saved in this browser only. Once the shared database is connected, everyone's answers will appear here.</span><button class="btn ghost" type="button" id="clearAll">Clear all answers</button></div>`;
+function renderIdeas() {
+  const w = $('#ideasWrap'), key = state.me == null ? 'none' : 'me' + state.me;
+  if (w.dataset.k !== key) {
+    w.dataset.k = key;
+    w.innerHTML = `<section class="ideas" aria-labelledby="ideasH">
+      <h2 id="ideasH">Where else do you wanna visit?</h2>
+      <p class="res-sub">Add anything that isn't on our list yet. Everyone can see these.</p>
+      ${state.me == null ? `<p class="pick-name" style="margin-top:12px"><span>Pick your name to add an idea.</span><button class="btn primary" type="button" data-who>Choose name</button></p>`
+        : `<form class="idea-form" id="ideaForm"><input id="ideaInput" maxlength="140" autocomplete="off" placeholder="A place, a food, an experience…" aria-label="Your idea"><button class="btn primary" type="submit">Add</button></form>`}
+      <ul class="idea-list" id="ideaList"></ul>
+    </section>`;
+  }
+  const all = [];
+  TRAVELLERS.forEach((n, i) => ((state.data.ideas || {})[i] || []).forEach((it, j) => all.push({ i, j, ...it })));
+  all.sort((a, b) => (b.at || 0) - (a.at || 0));
+  $('#ideaList').innerHTML = all.length ? all.map(it => `<li><span class="avatar" title="${esc(TRAVELLERS[it.i])}" aria-label="${esc(TRAVELLERS[it.i])}">${esc(initials(TRAVELLERS[it.i]))}</span><span class="t">${esc(it.t)}</span>${it.i === state.me ? `<button class="idea-del" type="button" data-del-idea="${it.j}" aria-label="Remove this idea">&times;</button>` : ''}</li>`).join('')
+    : `<li class="idea-empty">No ideas yet. Be the first!</li>`;
+}
 function renderResults() {
-  const el = $('#resultsBody');
-  const head = `<h1 class="page-title" id="resultsTitle">Results</h1>`;
+  if (!$('#resultsMain')) $('#resultsBody').innerHTML = `<h1 class="page-title" id="resultsTitle">Results</h1><div id="ideasWrap"></div><div id="resultsMain"></div>`;
+  renderIdeas();
+  const el = $('#resultsMain');
+  const head = '';
   if (!unlocked()) {
     const meDone = state.me != null && answeredCount(state.me) === PLACES.length, meTop = state.me != null && topDone(state.me);
     el.innerHTML = head + `<p class="page-sub">Which places do we all want to see most?</p>
@@ -2115,12 +2160,26 @@ function renderResults() {
     ${list.length ? `<ol class="rows">${list.map(row).join('')}</ol>` : `<div class="no-rows">Every place got at least one "No". Turn off the filter to see them all.</div>`}
     ${state.data.revealed && !everyoneDone() && state.me === ORGANISER ? `<p style="margin-top:20px"><button class="btn" type="button" id="hideAgain">Hide results again</button></p>` : ''}` + betaNote();
 }
+$('#resultsBody').addEventListener('submit', e => {
+  if (e.target.id !== 'ideaForm') return;
+  e.preventDefault();
+  const inp = $('#ideaInput'), t = inp.value.trim();
+  if (!t || state.me == null) return;
+  if (!state.data.ideas) state.data.ideas = {};
+  const mine = state.data.ideas[state.me] || (state.data.ideas[state.me] = []);
+  if (mine.length >= 30) { toast('That\'s plenty of ideas for now!'); return; }
+  mine.push({ t: t.slice(0, 140), at: Date.now() });
+  inp.value = '';
+  save(); renderIdeas(); toast('Idea added');
+});
 $('#resultsBody').addEventListener('click', e => {
+  const del = e.target.closest('[data-del-idea]');
+  if (del) { const mine = (state.data.ideas || {})[state.me] || []; mine.splice(+del.dataset.delIdea, 1); save(); renderIdeas(); return; }
   const ga = e.target.closest('[data-goga]'); if (ga) { go('getaways', ga.dataset.goga); return; }
   const s = e.target.closest('[data-sort]'); if (s) { sortBy = s.dataset.sort; renderResults(); return; }
   if (e.target.closest('#revealNow')) { if (confirm('Show everyone\'s answers now, even though not everyone has finished?')) { state.data.revealed = true; save(); renderResults(); } return; }
   if (e.target.closest('#hideAgain')) { state.data.revealed = false; save(); renderResults(); return; }
-  if (e.target.closest('#clearAll')) { if (confirm('Clear every answer from all three people? This can\'t be undone.')) { state.data = { answers: {}, ranks: {}, revealed: false }; LS.set('cd26.votes', state.data); Sync.clearAll(); refreshAll(); Getaways.refresh(); toast('All answers cleared'); } }
+  if (e.target.closest('#clearAll')) { if (confirm('Clear every answer from all three people? This can\'t be undone.')) { state.data = { answers: {}, ranks: {}, ideas: state.data.ideas || {}, revealed: false }; LS.set('cd26.votes', state.data); Sync.clearAll(); refreshAll(); Getaways.refresh(); toast('All answers cleared'); } }
 });
 $('#resultsBody').addEventListener('change', e => { if (e.target.id === 'hideNo') { hideNo = e.target.checked; renderResults(); } });
 $('#resultsBody').addEventListener('keydown', e => { const r = e.target.closest('.row'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); r.click(); } });

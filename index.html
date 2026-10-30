@@ -344,7 +344,7 @@ body[data-page="explore"] .toast.show{transform:translate(-50%,0)}
 .map-legend span{display:inline-flex;align-items:center;gap:5px}
 .map-legend i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px rgba(0,0,0,.3)}
 .row .type-tag{margin:0 0 0 2px;font-size:11.5px;padding:2px 8px;vertical-align:middle}
-#page-getaways{min-height:100vh;background:radial-gradient(900px 500px at 85% -10%, rgba(48,96,168,.14), transparent 60%),var(--space)}
+#page-getaways,#page-plan{min-height:100vh;background:radial-gradient(900px 500px at 85% -10%, rgba(48,96,168,.14), transparent 60%),var(--space)}
 .wrap.wide{max-width:1240px}
 .ga-mytop{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px}
 .ga-mytop .lbl{font-size:14px;color:var(--ink-2);margin-right:4px}
@@ -449,12 +449,85 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
 .apt{position:absolute;left:-10px;top:-10px;display:flex;align-items:center;gap:3px;white-space:nowrap;pointer-events:none}
 .apt-ic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#2F6FE4;color:#fff;border:1.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .apt-name{padding:1px 5px;border-radius:6px;background:rgba(6,9,18,.8);color:#fff;font-size:10px;font-weight:700;letter-spacing:.03em}
+.pl-banner{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:rgba(255,181,71,.1);border:1px dashed rgba(255,181,71,.55);color:var(--ink-2);font-size:14.5px}
+.pl-banner b{color:var(--amber)}
+.pl-tabs{grid-area:tabs;display:flex;flex-wrap:wrap;gap:6px;overflow-x:auto;margin-top:20px;padding:2px 2px 8px;scrollbar-width:none}
+.pl-tabs::-webkit-scrollbar{display:none}
+.pl-tab{flex:0 0 auto;padding:7px 14px;border-radius:14px;border:1px solid var(--line-2);background:var(--panel);cursor:pointer;text-align:left}
+.pl-tab b{display:flex;align-items:center;gap:6px;font-size:14.5px;font-weight:600}
+.pl-tab b i{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.pl-tab small{display:block;font-size:12.5px;color:var(--mute)}
+.pl-tab[aria-selected="true"]{border-color:var(--amber);background:rgba(40,28,6,.6)}
+.pl-panel{grid-area:panel;margin-top:12px}
+.pl-days{display:grid;gap:10px}
+.pl-daycard{display:block;width:100%;text-align:left;padding:16px 18px;border-radius:var(--r-md);background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--c);cursor:pointer}
+.pl-daycard:hover{border-color:var(--line-2);border-left-color:var(--c)}
+.pl-dc-top{display:flex;gap:10px;align-items:baseline;font-size:13.5px;color:var(--mute)}
+.pl-dc-top b{color:var(--c);font-size:14px}
+.pl-daycard h3{margin:4px 0 0;font-size:18px;font-weight:600}
+.pl-daycard p{margin:6px 0 0;font-size:14px;color:var(--ink-2);line-height:1.5}
+.pl-dayhead{padding:18px 20px;border-radius:var(--r-lg);background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c)}
+.pl-chip{display:inline-block;font-size:13px;font-weight:700;color:var(--c)}
+.pl-dayhead h2{margin:6px 0 0;font-size:24px;font-weight:600;letter-spacing:-.01em}
+.pl-dayhead p{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+.pl-dayhead .pl-note{color:var(--ga);font-size:14px}
+.pl-stops{list-style:none;margin:14px 0 0;padding:0}
+.pl-stop{display:grid;grid-template-columns:50px 30px minmax(0,1fr);gap:10px;align-items:start;padding:12px;border-radius:var(--r-md);background:var(--panel);border:1px solid var(--line);cursor:pointer;transition:border-color .2s}
+.pl-stop:hover{border-color:var(--line-2)}
+.pl-stop.on{border-color:var(--c);box-shadow:0 0 0 3px rgba(255,255,255,.08)}
+.pl-time{font-size:15px;font-weight:700;padding-top:4px;font-variant-numeric:tabular-nums}
+.pl-num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#14100a;font-weight:700;font-size:13.5px}
+.pl-sbody h3{margin:3px 0 0;font-size:16.5px;font-weight:600;line-height:1.3}
+.pl-sbody h3 .zh{font-size:14.5px;color:var(--ink-2)}
+.pl-sbody p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.pl-sbody .link-btn{margin-top:6px;font-size:13.5px}
+.pl-th{float:right;width:64px;height:48px;margin:0 0 6px 10px;border-radius:10px;overflow:hidden;background:var(--panel-2)}
+.pl-th img{width:100%;height:100%;object-fit:cover}
+.pl-th .ph-fallback{font-size:13px}
+.pl-travel{list-style:none;margin:0 0 0 64px;padding:8px 0 8px 18px;border-left:2px dashed var(--c);font-size:13px;color:var(--mute)}
+#plMap{width:100%;height:100%}
+.pl-pin{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#14100a;font-weight:800;font-size:13px;border:2px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.35);cursor:pointer}
+.pl-pin.sm{left:-11px;top:-11px;width:22px;height:22px;font-size:11px}
+.pl-edited{margin:12px 0 0;font-size:13.5px;color:var(--mute)}
+.pl-head-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pl-empty{margin-top:14px;padding:18px;border-radius:var(--r-md);border:1px dashed var(--line-2);color:var(--ink-2);font-size:15px}
+.pl-in{display:block;width:100%;margin-top:8px;padding:9px 12px;border-radius:10px;border:1px solid var(--line-2);background:rgba(236,241,250,.05);color:var(--ink);font:inherit;font-size:15px}
+.pl-in::placeholder{color:var(--mute)}
+.pl-in:focus,.pl-in-time:focus,#plSearch:focus{outline:2px solid var(--amber);outline-offset:1px}
+.pl-in-title{font-size:20px;font-weight:600}
+.pl-in-time{width:100%;max-width:118px;padding:6px 6px;border-radius:8px;border:1px solid var(--line-2);background:rgba(236,241,250,.05);color:var(--ink);font:inherit;font-size:14px;font-weight:700;color-scheme:dark}
+.pl-stops.editing .pl-stop{cursor:default;grid-template-columns:118px 30px minmax(0,1fr)}
+.pl-edit-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px}
+.pl-danger{color:var(--l0)}
+.pl-add{margin-top:16px;padding:16px;border-radius:var(--r-md);background:var(--panel);border:1px solid var(--amber)}
+.pl-add label{display:block;font-weight:600;font-size:16px;margin-bottom:8px}
+#plSearch{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--line-2);background:rgba(236,241,250,.05);color:var(--ink);font:inherit;font-size:16px}
+.pl-results{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.pl-results button{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:rgba(236,241,250,.04);cursor:pointer;text-align:left}
+.pl-results button:hover{border-color:var(--amber)}
+.pl-r-th{flex-shrink:0;width:40px;height:40px;border-radius:10px;overflow:hidden;background:var(--panel-2);display:grid;place-items:center;color:var(--ink-2)}
+.pl-r-th img{width:100%;height:100%;object-fit:cover}
+.pl-r-pin::after{content:"";width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--amber)}
+.pl-r-t{min-width:0;font-size:15px}
+.pl-r-t .zh{font-size:13.5px;color:var(--ink-2)}
+.pl-r-t small{display:block;font-size:12.5px;color:var(--mute)}
+.pl-r-status{font-size:14px;color:var(--mute);padding:6px 2px}
+.pl-hint{margin:10px 0 0;font-size:13px;color:var(--mute)}
 /* ---------- Small screens ---------- */
 @media (max-width:760px){
   :root{--topbar:58px}
   .brand small{display:none}
   .tabs a{padding:6px 8px;font-size:13.5px}
   .ga-grid{grid-template-columns:1fr;grid-template-areas:"head" "tabs" "map" "panel"}
+  .pl-stop{grid-template-columns:44px 26px minmax(0,1fr);gap:8px;padding:10px}
+  .pl-num{width:24px;height:24px;font-size:12px}
+  .pl-travel{margin-left:52px}
+  .pl-tabs{flex-wrap:nowrap}
+  .pl-stops.editing .pl-stop{grid-template-columns:26px minmax(0,1fr);grid-template-areas:"num time" "num body";row-gap:6px}
+  .pl-stops.editing .pl-num{grid-area:num}
+  .pl-stops.editing .pl-in-time{grid-area:time;max-width:150px}
+  .pl-stops.editing .pl-sbody{grid-area:body}
+  .pl-in,.pl-in-time{font-size:16px}
   .ga-map-wrap{position:relative;top:0;height:240px;min-height:0;margin-top:6px}
   .ga-body{padding:18px 18px 24px}
   .ga-rank-btns{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -508,12 +581,20 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
   .score{grid-column:2 / -1;text-align:left;display:flex;align-items:baseline;gap:10px;min-width:0}
   .score .agree{margin-top:0}
 }
-@media (max-width:420px){
-  .topbar{gap:8px;padding-left:12px;padding-right:12px}
+@media (max-width:480px){
+  .topbar{gap:6px;padding-left:10px;padding-right:10px}
+  .who-chip{padding:2px}
+  .who-chip .avatar{width:26px;height:26px}
   .brand{padding:4px 2px}
   .brand .zh{font-size:18px}
   .tabs{margin-left:auto}
-  .tabs a{padding:6px 6px;font-size:12.5px}
+  .tabs{padding:2px}
+  .tabs a{padding:6px 5px;font-size:12px}
+}
+@media (max-width:390px){
+  .topbar{gap:5px;padding-left:8px;padding-right:8px}
+  .brand .zh{font-size:17px}
+  .tabs a{padding:6px 4px;font-size:11.5px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
@@ -527,6 +608,7 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
     <a href="#/journey" data-page="journey">Journey</a>
     <a href="#/explore" data-page="explore">Explore</a>
     <a href="#/getaways" data-page="getaways">Getaways</a>
+    <a href="#/plan" data-page="plan">Plan</a>
     <a href="#/results" data-page="results">Results</a>
   </nav>
   <button class="who-chip" id="whoChip" type="button"></button>
@@ -570,6 +652,10 @@ body[data-page="explore"] .toast{top:calc(var(--topbar) + var(--safe-t) + 116px)
 
   <section id="page-getaways" class="page" aria-labelledby="gaTitle">
     <div class="wrap wide" id="gaBody"></div>
+  </section>
+
+  <section id="page-plan" class="page" aria-labelledby="plTitle">
+    <div class="wrap wide" id="plBody"></div>
   </section>
 
   <section id="page-results" class="page" aria-labelledby="resultsTitle">
@@ -1058,6 +1144,55 @@ const GA_PINS = GETAWAYS.map(g => ({
   facts: [['Getting there', g.travel], ['Where we\'d stay', g.hotel ? g.hotel.name : 'Not picked yet']],
 }));
 
+/* Day-by-day plan (EXAMPLE for preview: replace once everyone has voted) */
+const PLAN = {
+  example: true,
+  days: [
+    { id: 'day1', date: '2026-12-14', title: 'Arrive and first lanterns', summary: 'Land, check in, then an easy first evening close to the hotel.', stops: [
+      { time: '13:25', name: 'Land at Shuangliu Airport', code: 'CTU', lat: 30.5785, lon: 103.9471, note: 'CX986 from Hong Kong.' },
+      { time: '15:00', place: 'hotel', note: 'Check in and rest.', travel: 'Taxi, about 30 min' },
+      { time: '17:00', place: 'wuhou', note: 'See the shrine before it closes, then stay for the lanterns on Jinli.', travel: 'Taxi, about 15 min' },
+      { time: '19:30', name: 'Dinner on Jinli', lat: 30.6452, lon: 104.0503, note: 'Sichuan snacks along the old street.', travel: 'Walk, 5 min' },
+    ] },
+    { id: 'day2', date: '2026-12-15', title: 'Pandas and the city centre', summary: 'An early start for the pandas, then the centre from afternoon to night.', stops: [
+      { time: '07:30', place: 'panda', note: 'Arrive at opening, when the pandas are most active.', travel: 'Taxi, about 45 min' },
+      { time: '14:30', place: 'wenshu', note: 'Temple courtyards and tea in the garden.', travel: 'Taxi, about 30 min' },
+      { time: '17:00', place: 'taikooli', note: 'Browse as the lights come on.', travel: 'Taxi or metro, about 20 min' },
+      { time: '18:30', place: 'chunxi', note: 'The climbing panda on IFS, then dinner nearby.', travel: 'Walk, 5 min' },
+      { time: '21:00', place: 'funan', note: 'Night walk to the golden bridge.', travel: 'Walk, about 15 min' },
+    ] },
+    { id: 'day3', date: '2026-12-16', title: 'Old Chengdu, west side', summary: 'Gardens, temples and teahouses, then Yulin for the evening.', stops: [
+      { time: '09:00', place: 'dufu', note: 'The gardens are calmest in the morning.', travel: 'Taxi, about 20 min' },
+      { time: '11:00', place: 'qingyang', note: 'Taoist temple beside Culture Park.', travel: 'Taxi, about 10 min' },
+      { time: '12:30', place: 'peoplespark', note: 'Lunch nearby, then tea at Heming Teahouse.', travel: 'Taxi, about 10 min' },
+      { time: '15:30', place: 'kuanzhai', note: 'Wander the three lanes.', travel: 'Walk, about 15 min' },
+      { time: '18:30', place: 'yulin', note: 'Night snacks, bars and the Little Bar.', travel: 'Taxi, about 20 min' },
+    ] },
+    { id: 'day4', date: '2026-12-17', title: 'Day trip: Leshan Giant Buddha', summary: 'High-speed train south for the Buddha and Leshan\'s street food.', stops: [
+      { time: '08:00', name: 'Chengdu East Railway Station', lat: 30.6296, lon: 104.1418, note: 'High-speed train to Leshan.', travel: 'Taxi, about 35 min' },
+      { time: '10:00', place: 'leshan', note: 'Down the cliff stairway beside the Buddha, then the view from a boat.', travel: 'Train about 1 hour, then taxi' },
+      { time: '13:30', name: 'Leshan street food', lat: 29.5620, lon: 103.7630, note: 'Bobo chicken and sweet-skinned duck.', travel: 'Taxi, about 15 min' },
+      { time: '18:30', place: 'hotel', note: 'Back by evening; dinner near the hotel.', travel: 'Train about 1 hour, then taxi' },
+    ] },
+    { id: 'day5', date: '2026-12-18', title: 'Getaway: night 1 (example: Mount Emei)', summary: 'Out of the city for one night.', note: 'This depends on your top-ranked getaway. Mount Emei is shown as an example.', stops: [
+      { time: '09:00', name: 'Chengdu East Railway Station', lat: 30.6296, lon: 104.1418, note: 'High-speed train to Emeishan.', travel: 'Taxi, about 35 min' },
+      { time: '10:30', name: 'Emeishan Station', lat: 29.6010, lon: 103.4840, note: 'Then on to the hotel.', travel: 'Train, about 1 to 1.5 hours' },
+      { time: '13:00', name: 'Banyan Tree Emei', lat: 29.5800, lon: 103.4300, note: 'Check in, then the private hot spring.', travel: 'Taxi, about 30 min' },
+    ] },
+    { id: 'day6', date: '2026-12-19', title: 'Golden Summit, then back', summary: 'Up the mountain early, back in Chengdu for dinner.', stops: [
+      { time: '06:30', name: 'Mountain entrance, about 2,000 m', lat: 29.5400, lon: 103.3450, note: 'Bus up from the foot of the mountain.', travel: 'Bus, about 2 hours' },
+      { time: '09:00', name: 'Golden Summit, about 3,000 m', lat: 29.5226, lon: 103.3320, note: '30-minute walk, then a 20-minute cable car to the top.', travel: 'Walk and cable car' },
+      { time: '18:30', place: 'hotel', note: 'Back for a last big dinner in Chengdu.', travel: 'Bus and train, about 4 hours' },
+    ] },
+    { id: 'day7', date: '2026-12-20', title: 'Last morning and fly home', summary: 'One last sight, then the afternoon flight.', stops: [
+      { time: '09:00', place: 'tianfu', note: 'Chengdu Museum opens; entry is free.', travel: 'Metro or taxi, about 20 min' },
+      { time: '11:30', place: 'hotel', note: 'Collect the bags.', travel: 'Taxi, about 20 min' },
+      { time: '12:40', name: 'Shuangliu Airport', code: 'CTU', lat: 30.5785, lon: 103.9471, note: 'CX987 to Hong Kong at 14:40.', travel: 'Taxi, about 30 min' },
+    ] },
+  ],
+};
+const PLAN_COLORS = ['#FFB547', '#3CCBB4', '#FF6FA3', '#B794F6', '#5AA9FF', '#9BD15A', '#FF8A5C'];
+
 const LEVELS = [
   { v: 3, label: 'Yesss',  short: 'Yesss',  c: 'var(--l3)' },
   { v: 2, label: 'Intend', short: 'Intend', c: 'var(--l2)' },
@@ -1127,6 +1262,7 @@ const Sync = (() => {
         LS.set('cd26.votes', state.data);
         refreshAll();
       }, onErr);
+      F.onSnapshot(F.doc(db, 'trips', TRIP_ID, 'shared', 'plan'), d => { if (d.exists()) Plan.remote(d.data()); }, onErr);
       F.onSnapshot(F.doc(db, 'trips', TRIP_ID), d => {
         state.data.revealed = !!(d.exists() && d.data().revealed);
         LS.set('cd26.votes', state.data);
@@ -1152,7 +1288,11 @@ const Sync = (() => {
     TRAVELLERS.forEach((_, i) => F.updateDoc(F.doc(db, 'trips', TRIP_ID, 'people', String(i)), { answers: {}, ranks: {} }).catch(() => {}));
     F.setDoc(F.doc(db, 'trips', TRIP_ID), { revealed: false }, { merge: true }).catch(onErr);
   }
-  return { start, push, clearAll, get live() { return live; }, get enabled() { return !!(cfg && cfg.apiKey && !/PASTE/.test(cfg.apiKey)); } };
+  function pushPlan(plan) {
+    if (!db) return;
+    F.setDoc(F.doc(db, 'trips', TRIP_ID, 'shared', 'plan'), JSON.parse(JSON.stringify(plan))).catch(onErr);
+  }
+  return { start, push, pushPlan, clearAll, get live() { return live; }, get enabled() { return !!(cfg && cfg.apiKey && !/PASTE/.test(cfg.apiKey)); } };
 })();
 const myAnswers = (i = state.me) => (i == null ? {} : state.data.answers[i] || {});
 const answeredCount = i => { const a = myAnswers(i); return PLACES.filter(p => a[p.id] != null).length; };
@@ -2089,6 +2229,246 @@ const Getaways = (() => {
 })();
 
 /* =====================================================================
+   8c. PLAN: day-by-day itinerary with a map (editable on the page)
+   ===================================================================== */
+const Plan = (() => {
+  let map = null, inited = false, current = 'overview', layer = null, focusI = null, editing = null, pending = null, saveT = 0;
+  let data = LS.get('cd26.plan', null) || JSON.parse(JSON.stringify(PLAN));
+  let geo = [], seq = 0, searchT = 0;
+  const days = () => data.days;
+  const dayById = id => days().find(d => d.id === id);
+  const colorOf = d => PLAN_COLORS[days().indexOf(d) % PLAN_COLORS.length];
+  const dayDate = d => local(d.date + 'T00:00:00+08:00').day;
+  const AIRPORT_STOPS = [{ id: 'apt-ctu', en: 'Shuangliu Airport (CTU)', zh: '双流机场', lat: 30.5785, lon: 103.9471 }, { id: 'apt-tfu', en: 'Tianfu Airport (TFU)', zh: '天府机场', lat: 30.3190, lon: 104.4450 }];
+  function info(st) {
+    if (st.place) { const p = byId(st.place); if (p) return { name: p.id === 'hotel' ? 'Crystal Hotel' : p.en, zh: p.id === 'hotel' ? '' : p.zh || '', lat: p.lat, lon: p.lon, id: p.id, pic: gallery[p.id] && gallery[p.id][0] }; }
+    return { name: st.name + (st.code ? ` (${st.code})` : ''), zh: st.zh || '', lat: st.lat, lon: st.lon, pic: st.photo ? { src: st.photo, thumb: st.photo } : null };
+  }
+  /* ---------- saving (this device + shared database) ---------- */
+  function save() {
+    data.example = false;
+    if (state.me != null) data.editedBy = TRAVELLERS[state.me];
+    data.editedAt = Date.now();
+    LS.set('cd26.plan', data);
+    clearTimeout(saveT); saveT = setTimeout(() => Sync.pushPlan(data), 500);
+  }
+  function remote(d) {
+    if (!d || !Array.isArray(d.days)) return;
+    const typing = document.activeElement && document.activeElement.closest && document.activeElement.closest('#plPanel');
+    if (editing && typing) { pending = d; return; }
+    data = d; LS.set('cd26.plan', data);
+    if (inited && document.body.dataset.page === 'plan') render(false);
+  }
+  const sortStops = d => d.stops.sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'));
+  function nextTime(d) {
+    const last = d.stops.filter(s => s.time).map(s => s.time).sort().pop();
+    if (!last) return '10:00';
+    const [h, m] = last.split(':').map(Number);
+    return `${String(Math.min(h + 2, 23)).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  }
+  /* ---------- view ---------- */
+  function tabsHTML() {
+    return `<button class="pl-tab" type="button" role="tab" data-day="overview" aria-selected="${current === 'overview'}"><b>Overview</b><small>All ${days().length} days</small></button>` +
+      days().map((d, i) => `<button class="pl-tab" type="button" role="tab" data-day="${d.id}" aria-selected="${current === d.id}" style="--c:${colorOf(d)}"><b><i aria-hidden="true"></i>Day ${i + 1}</b><small>${dayDate(d)}</small></button>`).join('');
+  }
+  function overviewHTML() {
+    return `<div class="pl-days">${days().map((d, i) => `<button class="pl-daycard" type="button" data-day="${d.id}" style="--c:${colorOf(d)}">
+      <span class="pl-dc-top"><b>Day ${i + 1}</b><span>${dayDate(d)}</span></span>
+      <h3>${esc(d.title || 'Free day')}</h3>
+      <p>${d.stops.length ? d.stops.map(st => esc(info(st).name)).join(', ') : 'No stops yet'}</p></button>`).join('')}</div>`;
+  }
+  function viewStopsHTML(d) {
+    if (!d.stops.length) return `<p class="pl-empty">No stops yet. Tap <b>Edit this day</b> to add some.</p>`;
+    return `<ol class="pl-stops" style="--c:${colorOf(d)}">${d.stops.map((st, j) => {
+      const x = info(st);
+      return `${j && st.travel ? `<li class="pl-travel"><span>${esc(st.travel)}</span></li>` : ''}
+        <li class="pl-stop${focusI === j ? ' on' : ''}" data-i="${j}">
+          <span class="pl-time">${st.time || ''}</span>
+          <span class="pl-num" aria-hidden="true">${j + 1}</span>
+          <div class="pl-sbody">
+            ${x.pic ? `<span class="pl-th">${imgHTML(x.pic, '', x.zh || x.name, false, true)}</span>` : ''}
+            <h3>${esc(x.name)}${x.zh ? ` <span class="zh" lang="zh">${x.zh}</span>` : ''}</h3>
+            ${st.note ? `<p>${esc(st.note)}</p>` : ''}
+            ${x.id && x.id !== 'hotel' && !x.id.startsWith('apt-') ? `<button class="link-btn" type="button" data-goplace="${x.id}">Open place card</button>` : ''}
+          </div>
+        </li>`;
+    }).join('')}</ol>`;
+  }
+  function editStopsHTML(d) {
+    return `<ol class="pl-stops editing" style="--c:${colorOf(d)}">${d.stops.map((st, j) => {
+      const x = info(st);
+      return `<li class="pl-stop edit" data-i="${j}">
+          <input class="pl-in-time" type="time" value="${st.time || ''}" data-f="time" data-i="${j}" aria-label="Time for ${esc(x.name)}">
+          <span class="pl-num" aria-hidden="true">${j + 1}</span>
+          <div class="pl-sbody">
+            ${x.pic ? `<span class="pl-th">${imgHTML(x.pic, '', x.zh || x.name, false, true)}</span>` : ''}
+            <h3>${esc(x.name)}${x.zh ? ` <span class="zh" lang="zh">${x.zh}</span>` : ''}</h3>
+            <input class="pl-in" type="text" data-f="note" data-i="${j}" value="${esc(st.note || '')}" placeholder="Note: what to do there" aria-label="Note">
+            ${j ? `<input class="pl-in" type="text" data-f="travel" data-i="${j}" value="${esc(st.travel || '')}" placeholder="How to get here, e.g. Taxi, 15 min" aria-label="How to get here">` : ''}
+            <div class="pl-edit-actions">${x.pic && !st.place ? `<button class="link-btn" type="button" data-nophoto="${j}">Remove photo</button>` : ''}<button class="link-btn pl-danger" type="button" data-rm="${j}">Remove stop</button></div>
+          </div>
+        </li>`;
+    }).join('')}</ol>
+    <div class="pl-add">
+      <label for="plSearch">Add a stop</label>
+      <input id="plSearch" type="search" autocomplete="off" enterkeyhint="search" placeholder="Type a place, in English or Chinese">
+      <ul class="pl-results" id="plResults"></ul>
+      <p class="pl-hint">Our places come first, with their photos. Anything else is found on the map.</p>
+    </div>`;
+  }
+  function dayHTML(d) {
+    const i = days().indexOf(d), ed = editing === d.id;
+    const head = ed
+      ? `<span class="pl-chip">Day ${i + 1}, ${dayDate(d)}</span>
+         <input class="pl-in pl-in-title" type="text" data-f="title" value="${esc(d.title || '')}" placeholder="Day title" aria-label="Day title">
+         <input class="pl-in" type="text" data-f="summary" value="${esc(d.summary || '')}" placeholder="One-line summary" aria-label="Day summary">`
+      : `<span class="pl-chip">Day ${i + 1}, ${dayDate(d)}</span><h2>${esc(d.title || 'Free day')}</h2>${d.summary ? `<p>${esc(d.summary)}</p>` : ''}${d.note ? `<p class="pl-note">${esc(d.note)}</p>` : ''}`;
+    return `<div class="pl-dayhead" style="--c:${colorOf(d)}">${head}
+        <div class="pl-head-actions">
+          <button class="btn${ed ? ' primary' : ''}" type="button" data-edit="${ed ? 'done' : d.id}">${ed ? 'Done' : 'Edit this day'}</button>
+          <button class="btn ghost" type="button" data-fitday>Show whole day</button>
+        </div>
+      </div>${ed ? editStopsHTML(d) : viewStopsHTML(d)}`;
+  }
+  const pin = (n, c, small) => L.divIcon({ className: 'pin-anchor', iconSize: [0, 0], html: `<div class="pl-pin${small ? ' sm' : ''}" style="--c:${c}"><span>${n}</span></div>` });
+  function drawMap(animate) {
+    if (!map) return;
+    if (layer) map.removeLayer(layer);
+    layer = L.layerGroup().addTo(map);
+    const pts = [], over = current === 'overview';
+    (over ? days() : [dayById(current)]).forEach(d => {
+      const c = colorOf(d), ll = d.stops.map(st => { const x = info(st); return [x.lat, x.lon]; }).filter(p => isFinite(p[0]) && isFinite(p[1]));
+      if (ll.length > 1) L.polyline(ll, { color: c, weight: over ? 3 : 4, opacity: 0.9, dashArray: '2 8', lineCap: 'round' }).addTo(layer);
+      d.stops.forEach((st, j) => {
+        const x = info(st); if (!isFinite(x.lat)) return;
+        const m = L.marker([x.lat, x.lon], { icon: pin(over ? days().indexOf(d) + 1 : j + 1, c, over), title: x.name, zIndexOffset: over ? 0 : 100 + j }).addTo(layer);
+        m.on('click', () => { if (over) select(d.id); else focusStop(j, false); });
+      });
+      pts.push(...ll);
+    });
+    if (!pts.length) { map.setView([30.66, 104.06], 11); return; }
+    const b = L.latLngBounds(pts);
+    if (animate && !reduceMotion) map.flyToBounds(b, { padding: [50, 50], maxZoom: 14, duration: 0.7 });
+    else map.fitBounds(b, { padding: [50, 50], maxZoom: 14 });
+  }
+  function render(animate) {
+    $('#plBanner').innerHTML = data.example ? '<p class="pl-banner"><b>Example plan for preview.</b> Edit any day to make it ours.</p>'
+      : data.editedBy ? `<p class="pl-edited">Last edited by ${esc(data.editedBy)}.</p>` : '';
+    $('#plTabs').innerHTML = tabsHTML();
+    $('#plPanel').innerHTML = current === 'overview' ? overviewHTML() : dayHTML(dayById(current));
+    drawMap(animate);
+  }
+  function select(id) {
+    if (id !== 'overview' && !dayById(id)) return;
+    current = id; focusI = null; editing = null;
+    history.replaceState(null, '', '#/plan/' + id);
+    render(true);
+    const t = $(`#plTabs [data-day="${id}"]`); if (t) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    const top = $('#plTabs').getBoundingClientRect().top;
+    if (top < 0) window.scrollTo({ top: scrollY + top - 90, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+  function focusStop(j, fromList) {
+    const d = dayById(current); if (!d || !d.stops[j]) return;
+    focusI = j;
+    $$('#plPanel .pl-stop').forEach(el => el.classList.toggle('on', +el.dataset.i === j));
+    const x = info(d.stops[j]);
+    if (map && isFinite(x.lat)) map.flyTo([x.lat, x.lon], Math.max(map.getZoom(), 14), { duration: reduceMotion ? 0 : 0.6 });
+    if (!fromList) { const el = $(`#plPanel .pl-stop[data-i="${j}"]`); if (el) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' }); }
+  }
+  /* ---------- adding stops: our places first, then the map (OpenStreetMap via Photon) ---------- */
+  const norm = t => String(t || '').toLowerCase().replace(/\s+/g, '');
+  function localMatches(q) {
+    const n = norm(q);
+    const pool = [...PLACES, ...GA_PINS, ...MASSAGE, HOTEL, ...AIRPORT_STOPS];
+    return pool.filter(p => [p.en, p.zh, p.py, p.alt, p.id === 'hotel' ? 'crystal hotel 酒店' : ''].some(v => v && norm(v).includes(n))).slice(0, 5);
+  }
+  function resultsHTML(q, loc, online, status) {
+    const li = [];
+    loc.forEach(p => { const g = gallery[p.id] && gallery[p.id][0]; li.push(`<li><button type="button" data-addl="${p.id}"><span class="pl-r-th">${g ? `<img src="${esc(g.thumb || g.src)}" alt="">` : planeSvg(45, 14)}</span><span class="pl-r-t"><b>${esc(p.id === 'hotel' ? 'Crystal Hotel' : p.en)}</b>${p.zh && p.id !== 'hotel' ? ` <span class="zh" lang="zh">${p.zh}</span>` : ''}<small>Our place</small></span></button></li>`); });
+    online.forEach((g, k) => li.push(`<li><button type="button" data-addg="${k}"><span class="pl-r-th pl-r-pin" aria-hidden="true"></span><span class="pl-r-t"><b>${esc(g.name)}</b><small>${esc(g.sub || 'From the map')}</small></span></button></li>`));
+    if (status) li.push(`<li class="pl-r-status">${esc(status)}</li>`);
+    return li.join('');
+  }
+  async function search(q) {
+    const my = ++seq, box = $('#plResults'); if (!box) return;
+    const loc = q.trim() ? localMatches(q) : [];
+    geo = [];
+    box.innerHTML = q.trim().length < 2 ? '' : resultsHTML(q, loc, [], 'Searching the map…');
+    if (q.trim().length < 2) return;
+    try {
+      const u = 'https://photon.komoot.io/api/?' + new URLSearchParams({ q, lat: '30.66', lon: '104.06', limit: '6', bbox: '73,18,135,54' });
+      const res = await fetch(u); if (!res.ok) throw new Error(res.status);
+      const j = await res.json(); if (my !== seq) return;
+      geo = (j.features || []).map(f => { const pr = f.properties || {}; return { name: pr.name || q, sub: [pr.street, pr.district || pr.city, pr.state].filter(Boolean).join(', '), lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] }; })
+        .filter(g => !loc.some(p => Math.abs(p.lat - g.lat) < 0.002 && Math.abs(p.lon - g.lon) < 0.002));
+      box.innerHTML = resultsHTML(q, loc, geo, !loc.length && !geo.length ? 'Nothing found. Try the Chinese name or a nearby landmark.' : '');
+    } catch (e) {
+      if (my !== seq) return;
+      box.innerHTML = resultsHTML(q, loc, [], loc.length ? '' : 'Couldn\'t search the map right now. Try again in a moment.');
+    }
+  }
+  function addStop(st) {
+    const d = dayById(current); if (!d) return;
+    st.time = nextTime(d); st.note = st.note || ''; st.travel = st.travel || '';
+    d.stops.push(st); sortStops(d); save();
+    render(true);
+    const i = d.stops.indexOf(st); focusI = i;
+    setTimeout(() => { const el = $(`#plPanel .pl-stop[data-i="${i}"] .pl-in-time`); if (el) el.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' }); }, 50);
+    toast(`Added ${info(st).name}. Check the time.`);
+    if (!st.place && !st.photo) commonsSearch(st.name).then(list => { if (list && list[0] && d.stops.includes(st) && !st.noPhoto) { st.photo = list[0].thumb || list[0].src; save(); if (editing === d.id) render(false); } }).catch(() => {});
+  }
+  function skeleton() {
+    $('#plBody').innerHTML = `<div class="ga-grid pl-grid">
+      <div class="ga-headarea"><h1 class="page-title" id="plTitle">Plan</h1>
+        <p class="page-sub">Day by day, with a map for each day.</p><div id="plBanner"></div></div>
+      <div class="pl-tabs" id="plTabs" role="tablist" aria-label="Days"></div>
+      <aside class="ga-map-wrap" aria-label="Map of the plan"><div id="plMap"></div></aside>
+      <article class="pl-panel" id="plPanel" role="tabpanel"></article>
+    </div>`;
+    const body = $('#plBody');
+    body.addEventListener('click', e => {
+      const t = e.target.closest('[data-day]'); if (t) { select(t.dataset.day); return; }
+      const g = e.target.closest('[data-goplace]'); if (g) { go('explore', g.dataset.goplace); return; }
+      const ed = e.target.closest('[data-edit]');
+      if (ed) { editing = ed.dataset.edit === 'done' ? null : ed.dataset.edit; if (!editing && pending) { data = pending; pending = null; } render(false); if (editing) setTimeout(() => $('#plSearch') && $('#plSearch').focus({ preventScroll: true }), 50); return; }
+      if (e.target.closest('[data-fitday]')) { focusI = null; $$('#plPanel .pl-stop').forEach(el => el.classList.remove('on')); drawMap(true); return; }
+      const d = dayById(current);
+      const rm = e.target.closest('[data-rm]'); if (rm && d) { const st = d.stops[+rm.dataset.rm]; if (confirm(`Remove ${info(st).name} from this day?`)) { d.stops.splice(+rm.dataset.rm, 1); save(); render(false); } return; }
+      const np = e.target.closest('[data-nophoto]'); if (np && d) { const st = d.stops[+np.dataset.nophoto]; st.photo = null; st.noPhoto = true; save(); render(false); return; }
+      const al = e.target.closest('[data-addl]'); if (al) { const id = al.dataset.addl, a = AIRPORT_STOPS.find(x => x.id === id); addStop(a ? { name: a.en, zh: a.zh, lat: a.lat, lon: a.lon } : { place: id }); return; }
+      const ag = e.target.closest('[data-addg]'); if (ag) { const g0 = geo[+ag.dataset.addg]; if (g0) addStop({ name: g0.name, lat: g0.lat, lon: g0.lon }); return; }
+      if (e.target.closest('input, button, a')) return;
+      const st = e.target.closest('.pl-stop'); if (st) focusStop(+st.dataset.i, true);
+    });
+    body.addEventListener('input', e => {
+      if (e.target.id === 'plSearch') { clearTimeout(searchT); const q = e.target.value; searchT = setTimeout(() => search(q), 350); return; }
+      const f = e.target.dataset.f, d = dayById(current); if (!f || !d || f === 'time') return;
+      if (f === 'title' || f === 'summary') d[f] = e.target.value; else d.stops[+e.target.dataset.i][f] = e.target.value;
+      save();
+    });
+    body.addEventListener('change', e => {
+      if (e.target.dataset.f !== 'time') return;
+      const d = dayById(current); if (!d) return;
+      d.stops[+e.target.dataset.i].time = e.target.value; sortStops(d); save(); render(false);
+    });
+    body.addEventListener('keydown', e => { if (e.target.id === 'plSearch' && e.key === 'Enter') { e.preventDefault(); const first = $('#plResults button'); if (first) first.click(); } });
+    if (typeof L !== 'undefined') {
+      map = L.map('plMap', { minZoom: 3, maxZoom: 17, center: [30.65, 104.06], zoom: 11, scrollWheelZoom: false });
+      BaseMap.attach(map, 'bright');
+    }
+  }
+  return {
+    remote,
+    show(arg) {
+      if (!inited) { skeleton(); inited = true; }
+      if (arg && (arg === 'overview' || dayById(arg))) { if (arg !== current) editing = null; current = arg; }
+      render(false);
+      if (map) setTimeout(() => { map.invalidateSize(); drawMap(false); }, 60);
+    },
+  };
+})();
+
+/* =====================================================================
    9. RESULTS PAGE
    ===================================================================== */
 let sortBy = 'score', hideNo = false;
@@ -2251,10 +2631,10 @@ function refreshAll() {
   Getaways.refresh();
   if (document.body.dataset.page === 'results') renderResults();
 }
-const TITLES = { home: 'Chengdu, December 2026', journey: 'Your journey', explore: 'Explore Chengdu', getaways: '2 days, 1 night', results: 'Results' };
+const TITLES = { home: 'Chengdu, December 2026', journey: 'Your journey', explore: 'Explore Chengdu', getaways: '2 days, 1 night', plan: 'Plan', results: 'Results' };
 function route() {
   const parts = location.hash.replace(/^#\/?/, '').split('/');
-  const page = ['journey', 'explore', 'getaways', 'results'].includes(parts[0]) ? parts[0] : 'home';
+  const page = ['journey', 'explore', 'getaways', 'plan', 'results'].includes(parts[0]) ? parts[0] : 'home';
   const prev = document.body.dataset.page;
   document.body.dataset.page = page;
   $$('.page').forEach(s => s.classList.toggle('is-active', s.id === 'page-' + page));
@@ -2265,6 +2645,7 @@ function route() {
   if (page === 'results') renderResults();
   if (page === 'explore') Explore.show(parts[1] || null);
   if (page === 'getaways') Getaways.show(parts[1] || null);
+  if (page === 'plan') Plan.show(parts[1] || null);
   if (prev !== page && page !== 'explore') window.scrollTo(0, 0);
 }
 document.addEventListener('click', e => {
